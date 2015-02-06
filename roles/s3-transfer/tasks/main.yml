@@ -1,4 +1,10 @@
 ---
 - name: move bucket contents and delete bucket
-  shell: "aws s3 mv --recursive s3://{{item}}/ s3://{{destination_bucket}}/{{item}}/; aws s3 rm s3://{{item}}"
+  shell: "aws s3 mv --recursive s3://{{item}}/ s3://{{destination_bucket}}/{{item}}/; aws s3api delete-bucket --bucket {{item}}"
   with_items: buckets
+  tags: archive
+
+- name: create bucket and unarchive contents
+  shell: "aws s3api create-bucket --bucket {{item}}; aws s3 mv --recursive s3://{{destination_bucket}}/{{item}}/ s3://{{item}}/; aws s3 rm s3://{{destination_bucket}}/{{item}}"
+  with_items: buckets
+  tags: unarchive
