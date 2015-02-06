@@ -1,0 +1,4 @@
+---
+- name: move bucket contents and delete bucket
+  shell: "aws s3 mv --recursive s3://{{item}}/ s3://{{destination-bucket}}/{{item}}/; aws s3 rm s3://{{item}}"
+  with_items: buckets
