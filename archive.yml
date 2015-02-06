@@ -1,0 +1,5 @@
+---
+- name: archive buckets
+  hosts: localhost
+  roles:
+  - s3-transfer
